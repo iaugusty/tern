@@ -516,6 +516,8 @@ s_summary.logical <- function(x, denom = c("n", "N_col", "N_row"), ...) {
 #' @param compare_with_ref_group (`flag`)\cr whether comparison statistics should be analyzed instead of summary
 #'   statistics (`compare_with_ref_group = TRUE` adds `pval` statistic comparing
 #'   against reference group).
+#' @param fmt_afun (logical)\cr If `TRUE` the formatting will be handled from within the afun call.
+#' \cr If `FALSE` the formatting will be handled through format arguments in the `rtables::analyze` call
 #'
 #' @return
 #' * `a_summary()` returns the corresponding list with formatted [rtables::CellValue()].
@@ -559,7 +561,8 @@ a_summary <- function(x,
                       .stat_names = NULL,
                       .formats = NULL,
                       .labels = NULL,
-                      .indent_mods = NULL) {
+                      .indent_mods = NULL,
+                      fmt_afun = TRUE) {
   dots_extra_args <- list(...)
 
   # Check if there are user-defined functions
@@ -645,13 +648,16 @@ a_summary <- function(x,
     lbls
   }
 
-  # Auto format handling
-  .formats <- apply_auto_formatting(
-    .formats,
-    x_stats,
-    extra_afun_params$.df_row,
-    extra_afun_params$.var
-  )
+  if (!is_char) {
+    # Auto format handling
+    .formats <- apply_auto_formatting(
+      .formats,
+      x_stats,
+      extra_afun_params$.df_row,
+      extra_afun_params$.var,
+      fmt_afun
+    )
+  }
 
   # Get and check statistical names from defaults
   .stat_names <- get_stat_names(x_stats, .stat_names)
@@ -762,7 +768,10 @@ analyze_vars <- function(lyt,
                          .stat_names = NULL,
                          .formats = NULL,
                          .labels = NULL,
-                         .indent_mods = NULL) {
+                         .indent_mods = NULL,
+                         fmt_afun = TRUE,
+                         format = NULL,
+                         format_col = NULL) {
   # Depending on main functions
   extra_args <- list(
     "na_rm" = na_rm,
@@ -776,13 +785,16 @@ analyze_vars <- function(lyt,
   if (!is.null(.formats)) extra_args[[".formats"]] <- .formats
   if (!is.null(.labels)) extra_args[[".labels"]] <- .labels
   if (!is.null(.indent_mods)) extra_args[[".indent_mods"]] <- .indent_mods
+  extra_args[["fmt_afun"]] <- fmt_afun
 
-  # Adding all additional information from layout to analysis functions (see ?rtables::additional_fun_params)
-  extra_args[[".additional_fun_parameters"]] <- get_additional_afun_params(add_alt_df = FALSE)
-  formals(a_summary) <- c(
-    formals(a_summary),
-    extra_args[[".additional_fun_parameters"]]
-  )
+  if (fmt_afun){
+    # Adding all additional information from layout to analysis functions (see ?rtables::additional_fun_params)
+    extra_args[[".additional_fun_parameters"]] <- get_additional_afun_params(add_alt_df = FALSE)
+    formals(a_summary) <- c(
+      formals(a_summary),
+      extra_args[[".additional_fun_parameters"]]
+    )
+  }
 
   # Main {rtables} structural call
   analyze(
@@ -796,6 +808,8 @@ analyze_vars <- function(lyt,
     extra_args = extra_args,
     show_labels = show_labels,
     table_names = table_names,
-    section_div = section_div
+    section_div = section_div,
+    format = format,
+    format_col = format_col
   )
 }

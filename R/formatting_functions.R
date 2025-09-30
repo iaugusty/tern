@@ -562,9 +562,13 @@ count_decimalplaces <- function(dec) {
 #' @inheritParams argument_convention
 #' @param x_stats (named `list`)\cr a named list of statistics where each element corresponds
 #'   to an element in `.formats`, with matching names.
-#'
+#' @param fmt_afun (logical)\cr If `TRUE` the formatting will be handled from within the afun call.
+#' \cr If `FALSE` the formatting will be handled through format arguments in the `rtables::analyze` call
 #' @keywords internal
-apply_auto_formatting <- function(.formats, x_stats, .df_row, .var) {
+apply_auto_formatting <- function(.formats, x_stats, .df_row, .var, fmt_afun = TRUE) {
+  if (!fmt_afun){
+    return(NULL)
+  }
   is_auto_fmt <- vapply(.formats, function(ii) is.character(ii) && ii == "auto", logical(1))
   if (any(is_auto_fmt)) {
     auto_stats <- x_stats[is_auto_fmt]

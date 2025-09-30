@@ -214,6 +214,9 @@ s_ancova <- function(df,
 
 #' @describeIn summarize_ancova Formatted analysis function which is used as `afun` in `summarize_ancova()`.
 #'
+#'@param fmt_afun (logical)\cr If `TRUE` the formatting will be handled from within the afun call.
+#' \cr If `FALSE` the formatting will be handled through format arguments in the `rtables::analyze` call
+#'
 #' @return
 #' * `a_ancova()` returns the corresponding list with formatted [rtables::CellValue()].
 #'
@@ -224,7 +227,8 @@ a_ancova <- function(df,
                      .stat_names = NULL,
                      .formats = NULL,
                      .labels = NULL,
-                     .indent_mods = NULL) {
+                     .indent_mods = NULL,
+                     fmt_afun = TRUE) {
   # Check for additional parameters to the statistics function
   dots_extra_args <- list(...)
   extra_afun_params <- retrieve_extra_afun_params(names(dots_extra_args$.additional_fun_parameters))
@@ -260,7 +264,7 @@ a_ancova <- function(df,
   .indent_mods <- get_indents_from_stats(.stats, .indent_mods)
 
   # Auto format handling
-  .formats <- apply_auto_formatting(.formats, x_stats, extra_afun_params$.df_row, extra_afun_params$.var)
+  .formats <- apply_auto_formatting(.formats, x_stats, extra_afun_params$.df_row, extra_afun_params$.var, fmt_afun)
 
   # Get and check statistical names
   .stat_names <- get_stat_names(x_stats, .stat_names)
@@ -321,9 +325,12 @@ summarize_ancova <- function(lyt,
                              .stat_names = NULL,
                              .formats = NULL,
                              .labels = NULL,
-                             .indent_mods = list("lsmean_diff_ci" = 1L, "pval" = 1L)) {
+                             .indent_mods = list("lsmean_diff_ci" = 1L, "pval" = 1L),
+                             fmt_afun = TRUE,
+                             format = NULL,
+                             format_col = NULL) {
   # Process standard extra arguments
-  extra_args <- list(".stats" = .stats)
+  extra_args <- list(".stats" = .stats, "fmt_afun" = fmt_afun)
   if (!is.null(.stat_names)) extra_args[[".stat_names"]] <- .stat_names
   if (!is.null(.formats)) extra_args[[".formats"]] <- .formats
   if (!is.null(.labels)) extra_args[[".labels"]] <- .labels
@@ -338,9 +345,12 @@ summarize_ancova <- function(lyt,
     ...
   )
 
-  # Append additional info from layout to the analysis function
-  extra_args[[".additional_fun_parameters"]] <- get_additional_afun_params(add_alt_df = FALSE)
-  formals(a_ancova) <- c(formals(a_ancova), extra_args[[".additional_fun_parameters"]])
+  if (fmt_afun) {
+    # Append additional info from layout to the analysis function
+    extra_args[[".additional_fun_parameters"]] <- get_additional_afun_params(add_alt_df = FALSE)
+    formals(a_ancova) <- c(formals(a_ancova), extra_args[[".additional_fun_parameters"]])
+  }
+  ### when fmt_afun is false, update to formals of underlying afun is handled inside newer version of rtables::analyze
 
   analyze(
     lyt = lyt,
@@ -351,6 +361,8 @@ summarize_ancova <- function(lyt,
     extra_args = extra_args,
     var_labels = var_labels,
     show_labels = show_labels,
-    table_names = table_names
+    table_names = table_names,
+    format = format,
+    format_col = format_col
   )
 }
