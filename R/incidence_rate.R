@@ -236,7 +236,8 @@ estimate_incidence_rate <- function(lyt,
                                     .stat_names = NULL,
                                     .formats = list(rate = "xx.xx", rate_ci = "(xx.xx, xx.xx)"),
                                     .labels = NULL,
-                                    .indent_mods = NULL) {
+                                    .indent_mods = NULL,
+                                    format = NULL) {
   # Process standard extra arguments
   extra_args <- list(".stats" = .stats)
   if (!is.null(.stat_names)) extra_args[[".stat_names"]] <- .stat_names
@@ -264,7 +265,8 @@ estimate_incidence_rate <- function(lyt,
       nested = nested,
       extra_args = extra_args,
       show_labels = show_labels,
-      table_names = table_names
+      table_names = table_names,
+      format = format
     )
   } else {
     summarize_row_groups(
