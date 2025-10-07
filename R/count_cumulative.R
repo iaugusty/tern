@@ -255,7 +255,8 @@ count_cumulative <- function(lyt,
                              .stat_names = NULL,
                              .formats = NULL,
                              .labels = NULL,
-                             .indent_mods = NULL) {
+                             .indent_mods = NULL,
+                             format = format) {
   # Depending on main functions
   extra_args <- list(
     "na_rm" = na_rm,
@@ -290,6 +291,7 @@ count_cumulative <- function(lyt,
     var_labels = var_labels,
     show_labels = show_labels,
     nested = nested,
-    extra_args = extra_args
+    extra_args = extra_args,
+    format = format
   )
 }

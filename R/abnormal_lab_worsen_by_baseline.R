@@ -197,7 +197,8 @@ count_abnormal_lab_worsen_by_baseline <- function(lyt,
                                                   .stat_names = NULL,
                                                   .formats = list(fraction = format_fraction),
                                                   .labels = NULL,
-                                                  .indent_mods = NULL) {
+                                                  .indent_mods = NULL,
+                                                  format = NULL) {
   checkmate::assert_string(var)
 
   # Deprecated argument warning
@@ -231,7 +232,8 @@ count_abnormal_lab_worsen_by_baseline <- function(lyt,
     na_str = na_str,
     nested = nested,
     extra_args = extra_args,
-    show_labels = "hidden"
+    show_labels = "hidden",
+    format = format
   )
 }
 

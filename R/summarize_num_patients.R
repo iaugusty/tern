@@ -328,7 +328,8 @@ analyze_num_patients <- function(lyt,
                                    unique = "Number of patients with at least one event",
                                    nonunique = "Number of events"
                                  ),
-                                 .indent_mods = NULL) {
+                                 .indent_mods = NULL,
+                                 format = NULL) {
   checkmate::assert_flag(riskdiff)
   afun <- if (isFALSE(riskdiff)) a_num_patients else afun_riskdiff
 
@@ -358,6 +359,7 @@ analyze_num_patients <- function(lyt,
     na_str = na_str,
     nested = nested,
     extra_args = extra_args,
-    show_labels = show_labels
+    show_labels = show_labels,
+    format = format
   )
 }

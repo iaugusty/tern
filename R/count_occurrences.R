@@ -253,7 +253,8 @@ count_occurrences <- function(lyt,
                               .stat_names = NULL,
                               .formats = NULL,
                               .labels = NULL,
-                              .indent_mods = NULL) {
+                              .indent_mods = NULL,
+                              format = NULL) {
   checkmate::assert_flag(riskdiff)
   afun <- if (isFALSE(riskdiff)) a_count_occurrences else afun_riskdiff
 
@@ -285,7 +286,8 @@ count_occurrences <- function(lyt,
     extra_args = extra_args,
     var_labels = var_labels,
     show_labels = show_labels,
-    table_names = table_names
+    table_names = table_names,
+    format = format
   )
 }
 
