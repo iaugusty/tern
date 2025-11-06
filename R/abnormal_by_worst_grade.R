@@ -209,7 +209,8 @@ count_abnormal_by_worst_grade <- function(lyt,
                                           .stat_names = NULL,
                                           .formats = list(count_fraction = format_count_fraction),
                                           .labels = NULL,
-                                          .indent_mods = NULL) {
+                                          .indent_mods = NULL,
+                                          format = NULL) {
   # Process standard extra arguments
   extra_args <- list(".stats" = .stats)
   if (!is.null(.stat_names)) extra_args[[".stat_names"]] <- .stat_names
@@ -233,7 +234,8 @@ count_abnormal_by_worst_grade <- function(lyt,
     na_str = na_str,
     nested = nested,
     extra_args = extra_args,
-    show_labels = "hidden"
+    show_labels = "hidden",
+    format = format
   )
 }
 

@@ -283,7 +283,8 @@ estimate_proportion_diff <- function(lyt,
                                      .stat_names = NULL,
                                      .formats = c(diff = "xx.x", diff_ci = "(xx.x, xx.x)"),
                                      .labels = NULL,
-                                     .indent_mods = c(diff = 0L, diff_ci = 1L)) {
+                                     .indent_mods = c(diff = 0L, diff_ci = 1L),
+                                     format = NULL) {
   # Depending on main functions
   extra_args <- list(
     "na_rm" = na_rm,
@@ -320,7 +321,8 @@ estimate_proportion_diff <- function(lyt,
     extra_args = extra_args,
     show_labels = show_labels,
     table_names = table_names,
-    section_div = section_div
+    section_div = section_div,
+    format = format
   )
 }
 

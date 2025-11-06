@@ -187,7 +187,8 @@ count_values <- function(lyt,
                          .stat_names = NULL,
                          .formats = c(count_fraction = "xx (xx.xx%)", count = "xx"),
                          .labels = c(count_fraction = paste(values, collapse = ", ")),
-                         .indent_mods = NULL) {
+                         .indent_mods = NULL,
+                         format = NULL) {
   # Process standard extra arguments
   extra_args <- list(".stats" = .stats)
   if (!is.null(.stat_names)) extra_args[[".stat_names"]] <- .stat_names
@@ -214,6 +215,7 @@ count_values <- function(lyt,
     nested = nested,
     extra_args = extra_args,
     show_labels = ifelse(length(vars) > 1, "visible", "hidden"),
-    table_names = table_names
+    table_names = table_names,
+    format = format
   )
 }

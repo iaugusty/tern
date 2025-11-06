@@ -311,7 +311,8 @@ surv_timepoint <- function(lyt,
                              c(rate_diff = 1L, rate_diff_ci = 2L, ztest_pval = 2L)
                            } else {
                              c(rate_diff_ci = 1L, ztest_pval = 1L)
-                           }) {
+                           },
+                           format = NULL) {
   method <- match.arg(method)
   checkmate::assert_string(table_names_suffix)
 
@@ -349,7 +350,8 @@ surv_timepoint <- function(lyt,
         extra_args = extra_args_i,
         var_labels = paste(time_point[i], var_labels),
         show_labels = show_labels,
-        table_names = paste0("surv_", time_point[i], table_names_suffix)
+        table_names = paste0("surv_", time_point[i], table_names_suffix),
+        format = format
       )
     }
 
@@ -366,7 +368,8 @@ surv_timepoint <- function(lyt,
         extra_args = extra_args_i,
         var_labels = paste(time_point[i], var_labels),
         show_labels = ifelse(method == "both", "hidden", show_labels),
-        table_names = paste0("surv_diff_", time_point[i], table_names_suffix)
+        table_names = paste0("surv_diff_", time_point[i], table_names_suffix),
+        format = format
       )
     }
   }

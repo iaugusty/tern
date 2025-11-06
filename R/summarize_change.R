@@ -169,7 +169,8 @@ summarize_change <- function(lyt,
                                mean_pval = "xx.xx"
                              ),
                              .labels = NULL,
-                             .indent_mods = NULL) {
+                             .indent_mods = NULL,
+                             format = NULL) {
   # Process standard extra arguments
   extra_args <- list(".stats" = .stats)
   if (!is.null(.stat_names)) extra_args[[".stat_names"]] <- .stat_names
@@ -200,6 +201,7 @@ summarize_change <- function(lyt,
     show_labels = show_labels,
     table_names = table_names,
     inclNAs = !na_rm,
-    section_div = section_div
+    section_div = section_div,
+    format = format
   )
 }

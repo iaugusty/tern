@@ -242,7 +242,8 @@ coxph_pairwise <- function(lyt,
                            .stat_names = NULL,
                            .formats = NULL,
                            .labels = NULL,
-                           .indent_mods = NULL) {
+                           .indent_mods = NULL,
+                           format = NULL) {
   # Process standard extra arguments
   extra_args <- list(".stats" = .stats)
   if (!is.null(.stat_names)) extra_args[[".stat_names"]] <- .stat_names
@@ -270,6 +271,7 @@ coxph_pairwise <- function(lyt,
     extra_args = extra_args,
     var_labels = var_labels,
     show_labels = show_labels,
-    table_names = table_names
+    table_names = table_names,
+    format = format
   )
 }

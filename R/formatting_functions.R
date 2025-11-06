@@ -565,6 +565,9 @@ count_decimalplaces <- function(dec) {
 #'
 #' @keywords internal
 apply_auto_formatting <- function(.formats, x_stats, .df_row, .var) {
+  if (inherits(.formats, "no_auto_fmt")){
+    return(NULL)
+  }
   is_auto_fmt <- vapply(.formats, function(ii) is.character(ii) && ii == "auto", logical(1))
   if (any(is_auto_fmt)) {
     auto_stats <- x_stats[is_auto_fmt]

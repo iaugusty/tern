@@ -245,7 +245,8 @@ surv_time <- function(lyt,
                         median_ci_3d = "xx.x (xx.x - xx.x)"
                       ),
                       .labels = list(median_ci = "95% CI", range = "Range"),
-                      .indent_mods = list(median_ci = 1L)) {
+                      .indent_mods = list(median_ci = 1L),
+                      format = NULL) {
   # Process standard extra arguments
   extra_args <- list(".stats" = .stats)
   if (!is.null(.stat_names)) extra_args[[".stat_names"]] <- .stat_names
@@ -273,6 +274,7 @@ surv_time <- function(lyt,
     table_names = table_names,
     na_str = na_str,
     nested = nested,
-    extra_args = extra_args
+    extra_args = extra_args,
+    format = format
   )
 }

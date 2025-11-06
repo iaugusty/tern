@@ -276,6 +276,9 @@ get_formats_from_stats <- function(stats,
       is.null(names(formats_in)) && is.null(levels_per_stats)
   ) {
     out <- as.list(formats_in) %>% setNames(stats)
+    if (inherits(formats_in, "no_auto_fmt")){
+      class(out) <- "no_auto_fmt"
+    }
     return(out)
   }
 
@@ -291,6 +294,9 @@ get_formats_from_stats <- function(stats,
   case_input_is_not_stat <- unlist(out, use.names = FALSE) == unlist(levels_per_stats, use.names = FALSE)
   out[names(out) == out | case_input_is_not_stat] <- list(NULL)
 
+  if (inherits(formats_in, "no_auto_fmt")){
+    class(out) <- "no_auto_fmt"
+  }
   out
 }
 

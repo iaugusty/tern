@@ -273,7 +273,8 @@ count_abnormal_by_marked <- function(lyt,
                                      .stat_names = NULL,
                                      .formats = list(count_fraction = format_count_fraction),
                                      .labels = NULL,
-                                     .indent_mods = NULL) {
+                                     .indent_mods = NULL,
+                                     format = NULL) {
   checkmate::assert_string(var)
 
   # Process standard extra arguments
@@ -299,6 +300,7 @@ count_abnormal_by_marked <- function(lyt,
     na_str = na_str,
     nested = nested,
     extra_args = extra_args,
-    show_labels = "hidden"
+    show_labels = "hidden",
+    format = format
   )
 }
